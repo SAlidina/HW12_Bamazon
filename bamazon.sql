@@ -23,3 +23,5 @@ VALUE ("Ream of Paper", 1.50, 30),
 ("Binder", 1.99, 35);
 
 SELECT * FROM products;
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'

@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
     //mysql password
     password: "password",
 
-    databse: "bamazon_db"
+    database: "bamazon_db"
 });
 
 //callback
@@ -43,13 +43,13 @@ function purchase() {
             //first question, user must input ID
             name: "IDChoice",
             type: "input",
-            message: "What product would you like to purchase? Please enter the item ID: ",
+            message: "What product would you like to purchase? Please enter the item ID: "
         },
         {
             //second question, user must input a valid stock quantity
             name: "quantityChoice",
             type: "input",
-            message: "How  many units would you like to purhcase? Please enter a valid number: ",
+            message: "How  many units would you like to purhcase? Please enter a valid number: "
         }
     ])
         .then(function (answer) {
@@ -105,7 +105,7 @@ function purchase() {
 };
 
 function promptAgain() {
-    inquier.prompt([
+    inquirer.prompt([
         {
             name: "again",
             type: "confirm",
