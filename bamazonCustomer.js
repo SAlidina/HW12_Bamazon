@@ -64,7 +64,7 @@ function purchase() {
 
                 for (var j = 0; j < res.length; j++) {
                     if (answer.quantityChoice > res[j].stock_quantity) {
-                        console.log("I'm sorry, there is not enough stock, please choose a valid amount." +
+                        console.log("<<INSUFFICIENT QUANTITY>> | There is not enough stock, please choose a valid amount." +
                             "\nProduct: " + res[j].product_name +
                             "\nWe only have " + res[j].stock_quantity + " left!");
 
@@ -72,12 +72,53 @@ function purchase() {
 
                         purchase();
                     }
-            else {
-                var totalAmnt = res[j].price * answer.quantityChoice;
+                    else {
+                        var totalAmnt = res[j].price * answer.quantityChoice;
 
-                console.log()
-            }
+                        console.log("\n Product Successfully Purchase!" +
+                            "\n Purchase Summary" +
+                            "\n Product Name: " + res[j].product_name +
+                            "\n Quantity: " + answer.quantityChoice +
+                            "\n Price/Unit: " + res[j].price +
+                            "\n Total: " + parseFloat(totalAmnt.toFixed(2)));
+
+                        var uptdStock = res[j].stock_quantity - answer.quantityChoice;
+
+                        connection.query("UPDATE products SET stock_quantity=? WHERE item_id=?", [uptdStock, answer.IDChoice], function (err, res) {
+                            if (err) throw err;
+                        });
+                        connection.query("SELECT * FROM products WHERE item_id=?", answer.IDChoice, function (err, res) {
+                            if (err) throw err;
+
+                            for (var k = 0; k < res.length; k++) {
+                                console.log("\nInventory UPDATED!");
+                                console.log("");
+
+                                promptAgain();
+
+                            }
+                        });
+                    }
                 }
             })
-        })
+        });
+};
+
+function promptAgain() {
+    inquier.prompt([
+        {
+            name: "again",
+            type: "confirm",
+            message: "Would you like to make another purchase?",
+        }
+    ])
+    .then(function (answer){
+        if(answer.again){
+            purchase();
+        }
+        else {
+            console.log("Thank you, come again!");
+            connection.end();
+        }
+    });
 }
