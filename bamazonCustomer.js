@@ -18,7 +18,7 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
     console.log("Connected as id " + connection.threadId);
-    console.log("");
+    console.log("=============================================");
     displayProd();
 })
 
@@ -31,7 +31,7 @@ function displayProd() {
                 "\ Price: " + parseFloat(res[i].price).toFixed(2) +
                 "\ Stock: " + res[i].stock_quantity);
         }
-        console.log("");
+        console.log("=============================================");
         //call function after list is displayed
         purchase();
     })
@@ -58,7 +58,7 @@ function purchase() {
 
                 if (res.length === 0) {
                     console.log("\n I'm sorry, that product is no longer in stock. Please select another product.");
-                    console.log("");
+                    console.log("=============================================");
                     purchase();
                 }
 
@@ -68,7 +68,7 @@ function purchase() {
                             "\nProduct: " + res[j].product_name +
                             "\nWe only have " + res[j].stock_quantity + " left!");
 
-                        console.log("");
+                        console.log("=============================================");
 
                         purchase();
                     }
@@ -84,9 +84,12 @@ function purchase() {
 
                         var uptdStock = res[j].stock_quantity - answer.quantityChoice;
 
-                        connection.query("UPDATE products SET stock_quantity=? WHERE item_id=?", [uptdStock, answer.IDChoice], function (err, res) {
-                            if (err) throw err;
-                        });
+                        connection.query("UPDATE products SET stock_quantity=? WHERE item_id=?",
+                            [uptdStock, answer.IDChoice],
+
+                            function (err, res) {
+                                if (err) throw err;
+                            });
                         connection.query("SELECT * FROM products WHERE item_id=?", answer.IDChoice, function (err, res) {
                             if (err) throw err;
 
@@ -112,13 +115,13 @@ function promptAgain() {
             message: "Would you like to make another purchase?",
         }
     ])
-    .then(function (answer){
-        if(answer.again){
-            purchase();
-        }
-        else {
-            console.log("Thank you, come again!");
-            connection.end();
-        }
-    });
+        .then(function (answer) {
+            if (answer.again) {
+                purchase();
+            }
+            else {
+                console.log("Thank you, come again!");
+                connection.end();
+            }
+        });
 }
