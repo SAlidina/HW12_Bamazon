@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
     //mysql password
     password: "password",
 
-    databse: "bamazon"
+    databse: "bamazon_db"
 });
 
 //callback
