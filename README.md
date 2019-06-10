@@ -15,5 +15,8 @@ The program will prompt the user if they enter in a number greater than the unit
 
 If the store has enough units the customer's ordered is fufilled and will let the customer know how much the total cost of their purchase was. The databse is updated to reflect the remaining quantity.
 
-### The Demonstration ###
-![Demonstration Gif](Demonstration.gif)
+### The Demonstration_Part 1 ###
+![Demonstration Gif](Demonstration_1.gif)
+
+### The Demonstration_Part 2 ###
+![Demonstration Gif](Demonstration_2.gif)
